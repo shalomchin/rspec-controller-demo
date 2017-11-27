@@ -2,12 +2,18 @@ require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
 
+  let(:admin) { create(:admin) }
+
+  before { sign_in admin }
+
   describe 'GET #index' do
 
     let(:user_1) { create(:user) }
     let!(:post_1) { create(:post, user: user_1) }
 
-    before { get :index, params: { user_id: user_1 } }
+    before do
+      get :index, params: { user_id: user_1 }
+    end
 
     it { expect(assigns(:posts)).to contain_exactly(post_1) }
     it { expect(assigns(:posts).length).to eq(1) }

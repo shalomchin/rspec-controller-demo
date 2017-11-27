@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
 
+  before_action :authenticate_admin!
   before_action :prepare_user, only: [:index, :create]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
@@ -37,7 +38,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to user_posts_url, notice: 'Post was successfully destroyed.'
+    redirect_to user_posts_path, notice: 'Post was successfully destroyed.'
   end
 
   private
